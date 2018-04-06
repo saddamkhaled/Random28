@@ -39,15 +39,15 @@ class game:
     def generation(self):
 
             print("Generating playing list,please wait...")
-            time.sleep(0)
+            time.sleep(5)
             print(a)
             print("Generating Bonus list,please wait...")
-            time.sleep(0)
+            time.sleep(5)
             print(b)
     def winLoose(self):
 
             print("Your result is loading...")
-            time.sleep(0)
+            time.sleep(2)
             numFinal = list()
             isWin = False
             for number in self.numbers:
