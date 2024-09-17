@@ -1,4 +1,11 @@
+
+
+
 # Random28
+
+
+![image](https://github.com/user-attachments/assets/5af1f08f-9377-460b-9f0f-f62d638dee62)
+
 
 Welcome to **Random28**, a fun and interactive lottery-style game! 🎉
 
