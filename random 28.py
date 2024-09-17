@@ -1,8 +1,13 @@
 import random
 import time
+from colorama import Fore, Style, init
 
+# Initialize Colorama
+init(autoreset=True)
 
-print("""
+# Banner for Random28
+banner = f"""
+{Fore.CYAN + Style.BRIGHT}
  _______  _______  _        ______   _______  _______    _______   _____  
 (  ____ )(  ___  )( (    /|(  __  \ (  ___  )(       )  / ___   ) / ___ \ 
 | (    )|| (   ) ||  \  ( || (  \  )| (   ) || () () |  \/   )  |( (___) )
@@ -12,61 +17,68 @@ print("""
 | ) \ \__| )   ( || )  \  || (__/  )| (___) || )   ( |  (   (__/\( (___) )
 |/   \__/|/     \||/    )_)(______/ (_______)|/     \|  \_______/ \_____/ 
           
-                     ~Author:Ben Khaled Saddam~                                                                 
-""")
-print("~" * 80)
-print( "       RANDOM 28:\n*you have to choose 7 numbers from 1 to 28. \n*you have 5 bonus numbers."
-          "\n*once you get 4 correct numbers you win!")
-print("~"*80)
+                     ~Author: Ben Khaled Saddam~                                                                 
+"""
 
-num = list(range(1,29))
-print(num)
-a = random.sample(range(1, 29), 7)
-b = random.sample(range(1, 29), 5)
+def draw_numbers(num_blue, num_yellow, num_range):
+    """Draws a specified number of unique random numbers from a given range."""
+    blue_numbers = sorted(random.sample(range(1, num_range + 1), num_blue))
+    yellow_numbers = sorted(random.sample(range(1, num_range + 1), num_yellow))
+    return blue_numbers, yellow_numbers
 
-class game:
-    def inputNumber(self):
+class Random28Game:
+    def __init__(self):
+        print(Fore.YELLOW + banner)  # Print banner
+        self.num_range = 28
+        self.num_blue = 7
+        self.num_yellow = 5
+        self.draw_main, self.draw_bonus = draw_numbers(self.num_blue, self.num_yellow, self.num_range)
+    
+    def input_numbers(self):
         while True:
             try:
-                self.numbers = [int(x) for x in input("Enter your list of 7 numbers separated by space please :").split()]
-                print("Your chosen numbers : ", self.numbers)
-            except ValueError:
-                print("Not an integer! Try again.")
-                continue
-            else:
-                return input
+                self.user_numbers = [int(x) for x in input(f"{Fore.GREEN}Enter your 7 numbers (1-{self.num_range}) separated by space: ").split()]
+                if len(self.user_numbers) != 7:
+                    raise ValueError("You must enter exactly 7 numbers.")
+                if any(num < 1 or num > self.num_range for num in self.user_numbers):
+                    raise ValueError(f"Numbers must be between 1 and {self.num_range}.")
+                print(Fore.CYAN + f"Your chosen numbers: {sorted(self.user_numbers)}")
                 break
-    def generation(self):
+            except ValueError as e:
+                print(Fore.RED + str(e))
+                continue
 
-            print("Generating playing list,please wait...")
-            time.sleep(5)
-            print(a)
-            print("Generating Bonus list,please wait...")
-            time.sleep(5)
-            print(b)
-    def winLoose(self):
+    def generate_draws(self):
+        print(Fore.YELLOW + "Generating draw numbers, please wait...")
+        time.sleep(2)
+        print(Fore.BLUE + f"Drawn Blue Numbers: {self.draw_main}")
+        print(Fore.YELLOW + f"Drawn Yellow Numbers: {self.draw_bonus}")
+    
+    def check_win(self):
+        print(Fore.YELLOW + "Calculating your result, please wait...")
+        time.sleep(2)
+        
+        main_matches = [num for num in self.user_numbers if num in self.draw_main]
+        bonus_matches = [num for num in self.user_numbers if num in self.draw_bonus]
+        
+        total_matches = len(main_matches) + len(bonus_matches)
+        is_win = len(main_matches) >= 4
+        
+        print(Fore.CYAN + f"Main Draw Matches: {sorted(main_matches)}")
+        print(Fore.CYAN + f"Bonus Matches: {sorted(bonus_matches)}")
+        print(Fore.CYAN + f"Total Matches: {total_matches}")
 
-            print("Your result is loading...")
-            time.sleep(2)
-            numFinal = list()
-            isWin = False
-            for number in self.numbers:
-                if number in a or number in b:
-                    numFinal.insert(numFinal.__len__(), number)
-                    print(number, "Correct !")
-                if (numFinal.__len__() == 4):
-                    isWin = True
-            if isWin:
-                print('You win ! :)')
-            else:
-                print('Sorry, you loose :(')
-                print("your final list :", numFinal)
+        if is_win:
+            print(Fore.GREEN + "Congratulations! You win! :)")
+        else:
+            print(Fore.RED + "Sorry, you lose. :(")
+        print(Fore.CYAN + f"Your final matched numbers: {sorted(main_matches + bonus_matches)}")
+
 def main():
-     yourgame=game()
-     yourgame.inputNumber()
-     yourgame.generation()
-     yourgame.winLoose()
+    game = Random28Game()
+    game.input_numbers()
+    game.generate_draws()
+    game.check_win()
 
-
-
-if __name__ == '__main__':main()
+if __name__ == '__main__':
+    main()
