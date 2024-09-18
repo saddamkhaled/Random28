@@ -4,9 +4,8 @@
 # Random28
 
 
-![image](https://github.com/user-attachments/assets/5af1f08f-9377-460b-9f0f-f62d638dee62)
+![image](https://github.com/user-attachments/assets/1a39f2b7-e44c-49df-9399-529ec3f41649)
 
-![image](https://github.com/user-attachments/assets/fdd24275-a428-4f56-93e9-92d98c54fa43)
 
 Welcome to **Random28**, a fun and interactive lottery-style game! 🎉
 
